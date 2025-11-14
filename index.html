@@ -3,118 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EU AI Act Compliance Quiz - AI Wegwijzer</title>
+    <title>EU AI Act Compliance Quiz</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --secondary: #7c3aed;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --light: #f8fafc;
-            --dark: #1e293b;
-            --gray: #64748b;
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #34495e;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #f5f7fa;
             color: var(--dark);
             line-height: 1.6;
-            min-height: 100vh;
-            padding: 20px;
         }
         
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
+            padding: 20px;
         }
         
         header {
+            text-align: center;
+            padding: 30px 0;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 40px 30px;
-            text-align: center;
-        }
-        
-        .logo {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         
         h1 {
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
         
         .subtitle {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
         }
         
         .quiz-container {
+            background: white;
+            border-radius: 10px;
             padding: 30px;
-        }
-        
-        .progress-container {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             margin-bottom: 30px;
-        }
-        
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-            color: var(--gray);
         }
         
         .progress-bar {
             height: 8px;
-            background-color: #e2e8f0;
-            border-radius: 10px;
+            background-color: var(--light);
+            border-radius: 4px;
+            margin-bottom: 30px;
             overflow: hidden;
         }
         
         .progress {
             height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            background-color: var(--secondary);
             width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 10px;
+            transition: width 0.3s ease;
         }
         
         .question-container {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
         
         .question-number {
             font-size: 0.9rem;
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: var(--secondary);
+            font-weight: bold;
+            margin-bottom: 5px;
         }
         
         .question-text {
-            font-size: 1.4rem;
-            margin-bottom: 25px;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
             font-weight: 600;
-            line-height: 1.4;
         }
         
         .options-container {
@@ -124,148 +101,75 @@
         }
         
         .option {
-            padding: 18px 20px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
+            padding: 15px;
+            border: 2px solid var(--light);
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: white;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.2s ease;
         }
         
         .option:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.1);
+            border-color: var(--secondary);
+            background-color: rgba(52, 152, 219, 0.05);
         }
         
         .option.selected {
-            border-color: var(--primary);
-            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
-        }
-        
-        .option-icon {
-            width: 24px;
-            height: 24px;
-            border: 2px solid #cbd5e1;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 12px;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            font-size: 0.8rem;
-        }
-        
-        .option.selected .option-icon {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
+            border-color: var(--secondary);
+            background-color: rgba(52, 152, 219, 0.1);
         }
         
         .buttons-container {
             display: flex;
             justify-content: space-between;
             margin-top: 30px;
-            gap: 15px;
         }
         
         button {
-            padding: 15px 30px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 12px;
+            border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            flex: 1;
+            transition: all 0.2s ease;
         }
         
         .btn-prev {
-            background-color: #f1f5f9;
+            background-color: var(--light);
             color: var(--dark);
         }
         
-        .btn-prev:hover:not(:disabled) {
-            background-color: #e2e8f0;
-            transform: translateY(-2px);
-        }
-        
         .btn-next {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background-color: var(--secondary);
             color: white;
-        }
-        
-        .btn-next:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
         }
         
         .btn-submit {
-            background: linear-gradient(135deg, var(--success), #059669);
+            background-color: var(--success);
             color: white;
         }
         
-        .btn-submit:hover {
+        button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
         button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: none !important;
-            box-shadow: none !important;
+            transform: none;
+            box-shadow: none;
         }
         
         .results-container {
-            padding: 40px 30px;
             text-align: center;
+            padding: 40px 20px;
             display: none;
         }
         
-        .result-header {
-            margin-bottom: 30px;
-        }
-        
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 0 auto 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            position: relative;
-            background: conic-gradient(var(--success) 0%, var(--success) 0%, #e2e8f0 0%);
-            transition: background 1s ease;
-        }
-        
-        .score-circle.compliant {
-            background: conic-gradient(var(--success) var(--score-percent), #e2e8f0 var(--score-percent));
-        }
-        
-        .score-circle.non-compliant {
-            background: conic-gradient(var(--danger) var(--score-percent), #e2e8f0 var(--score-percent));
-        }
-        
-        .score-circle::before {
-            content: '';
-            position: absolute;
-            width: 130px;
-            height: 130px;
-            background: white;
-            border-radius: 50%;
-        }
-        
         .score-display {
-            position: relative;
-            z-index: 1;
+            font-size: 5rem;
+            font-weight: bold;
+            margin: 20px 0;
         }
         
         .compliant {
@@ -280,152 +184,54 @@
             font-size: 1.3rem;
             margin-bottom: 25px;
             line-height: 1.5;
-            font-weight: 600;
         }
         
         .recommendation {
-            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-            padding: 25px;
-            border-radius: 15px;
-            margin: 30px 0;
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
             text-align: left;
-            border-left: 4px solid var(--primary);
-        }
-        
-        .recommendation h3 {
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-        
-        .recommendation ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .recommendation li {
-            padding: 8px 0;
-            position: relative;
-            padding-left: 25px;
-        }
-        
-        .recommendation li:before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--success);
-            font-weight: bold;
         }
         
         .cta-container {
-            margin-top: 35px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
+            margin-top: 30px;
         }
         
         .btn-cta {
-            flex: 1;
-            min-width: 200px;
-            padding: 18px 25px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            text-align: center;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--success), #27ae60);
             color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            margin: 10px;
         }
         
         .btn-secondary {
-            background: #f1f5f9;
+            background-color: var(--light);
             color: var(--dark);
-            border: 2px solid #e2e8f0;
         }
         
-        .btn-secondary:hover {
-            background: #e2e8f0;
-            transform: translateY(-3px);
-        }
-        
-        .risk-badge {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-        
-        .risk-high {
-            background: #fee2e2;
-            color: var(--danger);
-        }
-        
-        .risk-medium {
-            background: #fef3c7;
-            color: var(--warning);
-        }
-        
-        .risk-low {
-            background: #d1fae5;
-            color: var(--success);
-        }
-        
-        @media (max-width: 768px) {
-            body {
+        @media (max-width: 600px) {
+            .container {
                 padding: 10px;
             }
             
-            .container {
-                border-radius: 15px;
-            }
-            
-            header {
-                padding: 30px 20px;
-            }
-            
             h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             
             .quiz-container {
                 padding: 20px;
             }
             
-            .question-text {
-                font-size: 1.2rem;
-            }
-            
             .buttons-container {
                 flex-direction: column;
+                gap: 10px;
             }
             
-            .cta-container {
-                flex-direction: column;
-            }
-            
-            .btn-cta {
-                min-width: auto;
-            }
-            
-            .score-circle {
-                width: 120px;
-                height: 120px;
-            }
-            
-            .score-circle::before {
-                width: 100px;
-                height: 100px;
+            button {
+                width: 100%;
             }
         }
     </style>
@@ -433,24 +239,17 @@
 <body>
     <div class="container">
         <header>
-            <div class="logo">🤖</div>
-            <h1>EU AI Act Compliance Scan</h1>
-            <p class="subtitle">Ontdek binnen 2 minuten of uw AI-systemen voldoen aan de nieuwe wetgeving en voorkom boetes tot €30 miljoen</p>
+            <h1>EU AI Act Compliance Quiz</h1>
+            <p class="subtitle">Ontdek of uw organisatie klaar is voor de nieuwe AI-wetgeving</p>
         </header>
         
         <div class="quiz-container" id="quiz">
-            <div class="progress-container">
-                <div class="progress-info">
-                    <span>Voortgang</span>
-                    <span><span id="current-question">1</span>/<span id="total-questions">5</span></span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress" id="progress"></div>
-                </div>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
             </div>
             
             <div class="question-container">
-                <div class="question-number">Vraag <span id="current-question-num">1</span></div>
+                <div class="question-number">Vraag <span id="current-question">1</span> van <span id="total-questions">5</span></div>
                 <h2 class="question-text" id="question-text">Wat is het primaire doel van uw AI-systeem?</h2>
                 
                 <div class="options-container" id="options-container">
@@ -459,20 +258,14 @@
             </div>
             
             <div class="buttons-container">
-                <button class="btn-prev" id="prev-btn" disabled>← Vorige</button>
-                <button class="btn-next" id="next-btn">Volgende →</button>
+                <button class="btn-prev" id="prev-btn" disabled>Vorige</button>
+                <button class="btn-next" id="next-btn">Volgende</button>
             </div>
         </div>
         
         <div class="results-container" id="results">
-            <div class="result-header">
-                <h2>Uw Compliance Resultaat</h2>
-            </div>
-            
-            <div class="score-circle" id="score-circle">
-                <div class="score-display" id="score-display">0%</div>
-            </div>
-            
+            <h2>Uw Compliance Resultaat</h2>
+            <div class="score-display" id="score-display">0%</div>
             <p class="result-message" id="result-message"></p>
             
             <div class="recommendation" id="recommendation">
@@ -480,12 +273,8 @@
             </div>
             
             <div class="cta-container">
-                <a href="https://www.aiwegwijzer.com/consultancy" class="btn-cta btn-primary" id="consultancy-btn">
-                    🚀 Plan Gratis Consultancy Gesprek
-                </a>
-                <a href="https://www.aiwegwijzer.com/ai-trainingen" class="btn-cta btn-secondary" id="training-btn">
-                    📚 Bekijk AI Trainingen
-                </a>
+                <button class="btn-cta" id="consultancy-btn">Plan een consultancy gesprek in</button>
+                <button class="btn-cta btn-secondary" id="training-btn">Bekijk onze trainingen</button>
             </div>
         </div>
     </div>
@@ -496,126 +285,46 @@
             {
                 question: "Wat is het primaire doel van uw AI-systeem?",
                 options: [
-                    { 
-                        text: "Gebruik in hoog-risico domeinen zoals rechterlijke besluitvorming, medische diagnose of kritieke infrastructuur", 
-                        score: 0,
-                        risk: "high"
-                    },
-                    { 
-                        text: "Biometrische identificatie of surveillance", 
-                        score: 0,
-                        risk: "high"
-                    },
-                    { 
-                        text: "Klantenservice, content aanbevelingen of marketing automatisering", 
-                        score: 3,
-                        risk: "medium"
-                    },
-                    { 
-                        text: "Interne procesoptimalisatie zonder externe impact", 
-                        score: 5,
-                        risk: "low"
-                    }
+                    { text: "Gebruik in hoog-risico domeinen zoals rechterlijke besluitvorming, medische diagnose of kritieke infrastructuur", score: 0 },
+                    { text: "Biometrische identificatie of surveillance", score: 0 },
+                    { text: "Klantenservice, content aanbevelingen of marketing automatisering", score: 3 },
+                    { text: "Interne procesoptimalisatie zonder externe impact", score: 5 }
                 ]
             },
             {
                 question: "Hoe transparant is uw AI-systeem over zijn werking?",
                 options: [
-                    { 
-                        text: "Het systeem is een 'black box' en beslissingen zijn niet uitlegbaar", 
-                        score: 0,
-                        risk: "high"
-                    },
-                    { 
-                        text: "Sommige beslissingen kunnen worden uitgelegd, maar niet consistent", 
-                        score: 2,
-                        risk: "medium"
-                    },
-                    { 
-                        text: "We kunnen meestal uitleggen hoe beslissingen worden genomen", 
-                        score: 4,
-                        risk: "low"
-                    },
-                    { 
-                        text: "Ons systeem is volledig transparant en beslissingen zijn altijd traceerbaar", 
-                        score: 5,
-                        risk: "low"
-                    }
+                    { text: "Het systeem is een 'black box' en beslissingen zijn niet uitlegbaar", score: 0 },
+                    { text: "Sommige beslissingen kunnen worden uitgelegd, maar niet consistent", score: 2 },
+                    { text: "We kunnen meestal uitleggen hoe beslissingen worden genomen", score: 4 },
+                    { text: "Ons systeem is volledig transparant en beslissingen zijn altijd traceerbaar", score: 5 }
                 ]
             },
             {
                 question: "Hoe gaat uw organisatie om met data privacy en governance?",
                 options: [
-                    { 
-                        text: "We hebben geen formeel data governance beleid", 
-                        score: 0,
-                        risk: "high"
-                    },
-                    { 
-                        text: "We volgen basis GDPR vereisten maar hebben geen AI-specifiek beleid", 
-                        score: 2,
-                        risk: "medium"
-                    },
-                    { 
-                        text: "We hebben een data governance framework dat ook AI-systemen omvat", 
-                        score: 4,
-                        risk: "low"
-                    },
-                    { 
-                        text: "We hebben een uitgebreid AI-governance framework met regelmatige audits", 
-                        score: 5,
-                        risk: "low"
-                    }
+                    { text: "We hebben geen formeel data governance beleid", score: 0 },
+                    { text: "We volgen basis GDPR vereisten maar hebben geen AI-specifiek beleid", score: 2 },
+                    { text: "We hebben een data governance framework dat ook AI-systemen omvat", score: 4 },
+                    { text: "We hebben een uitgebreid AI-governance framework met regelmatige audits", score: 5 }
                 ]
             },
             {
                 question: "Heeft uw organisatie procedures voor menselijk toezicht op AI-beslissingen?",
                 options: [
-                    { 
-                        text: "Nee, AI-beslissingen worden automatisch geïmplementeerd", 
-                        score: 0,
-                        risk: "high"
-                    },
-                    { 
-                        text: "Alleen voor hoog-risico beslissingen", 
-                        score: 2,
-                        risk: "medium"
-                    },
-                    { 
-                        text: "We hebben menselijk toezicht ingebouwd voor de meeste AI-beslissingen", 
-                        score: 4,
-                        risk: "low"
-                    },
-                    { 
-                        text: "Alle AI-beslissingen kunnen worden gemonitord en gecorrigeerd door mensen", 
-                        score: 5,
-                        risk: "low"
-                    }
+                    { text: "Nee, AI-beslissingen worden automatisch geïmplementeerd", score: 0 },
+                    { text: "Alleen voor hoog-risico beslissingen", score: 2 },
+                    { text: "We hebben menselijk toezicht ingebouwd voor de meeste AI-beslissingen", score: 4 },
+                    { text: "Alle AI-beslissingen kunnen worden gemonitord en gecorrigeerd door mensen", score: 5 }
                 ]
             },
             {
                 question: "Hoe robuust en veilig is uw AI-systeem tegen aanvallen of fouten?",
                 options: [
-                    { 
-                        text: "We hebben geen formele tests voor robuustheid uitgevoerd", 
-                        score: 0,
-                        risk: "high"
-                    },
-                    { 
-                        text: "We hebben basis tests uitgevoerd maar geen uitgebreide security assessment", 
-                        score: 2,
-                        risk: "medium"
-                    },
-                    { 
-                        text: "Ons systeem is getest op robuustheid en we hebben security maatregelen geïmplementeerd", 
-                        score: 4,
-                        risk: "low"
-                    },
-                    { 
-                        text: "Ons systeem ondergaat regelmatig uitgebreide security en robuustheid audits", 
-                        score: 5,
-                        risk: "low"
-                    }
+                    { text: "We hebben geen formele tests voor robuustheid uitgevoerd", score: 0 },
+                    { text: "We hebben basis tests uitgevoerd maar geen uitgebreide security assessment", score: 2 },
+                    { text: "Ons systeem is getest op robuustheid en we hebben security maatregelen geïmplementeerd", score: 4 },
+                    { text: "Ons systeem ondergaat regelmatig uitgebreide security en robuustheid audits", score: 5 }
                 ]
             }
         ];
@@ -626,12 +335,10 @@
         const questionText = document.getElementById('question-text');
         const optionsContainer = document.getElementById('options-container');
         const currentQuestionElement = document.getElementById('current-question');
-        const currentQuestionNumElement = document.getElementById('current-question-num');
         const totalQuestionsElement = document.getElementById('total-questions');
         const progressBar = document.getElementById('progress');
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
-        const scoreCircle = document.getElementById('score-circle');
         const scoreDisplay = document.getElementById('score-display');
         const resultMessage = document.getElementById('result-message');
         const recommendation = document.getElementById('recommendation');
@@ -655,7 +362,6 @@
             const question = quizQuestions[currentQuestion];
             questionText.textContent = question.question;
             currentQuestionElement.textContent = currentQuestion + 1;
-            currentQuestionNumElement.textContent = currentQuestion + 1;
             
             optionsContainer.innerHTML = '';
             question.options.forEach((option, index) => {
@@ -664,17 +370,7 @@
                 if (userAnswers[currentQuestion] === index) {
                     optionElement.classList.add('selected');
                 }
-                
-                const riskBadge = option.risk === 'high' ? '<span class="risk-badge risk-high">Hoog Risico</span>' : 
-                                option.risk === 'medium' ? '<span class="risk-badge risk-medium">Medium Risico</span>' : 
-                                '<span class="risk-badge risk-low">Laag Risico</span>';
-                
-                optionElement.innerHTML = `
-                    <span class="option-icon">${String.fromCharCode(65 + index)}</span>
-                    ${option.text}
-                    ${riskBadge}
-                `;
-                
+                optionElement.textContent = option.text;
                 optionElement.addEventListener('click', () => selectOption(index));
                 optionsContainer.appendChild(optionElement);
             });
@@ -693,11 +389,11 @@
             prevBtn.disabled = currentQuestion === 0;
             
             if (currentQuestion === quizQuestions.length - 1) {
-                nextBtn.textContent = 'Bekijk Resultaat →';
+                nextBtn.textContent = 'Bekijk Resultaat';
                 nextBtn.classList.remove('btn-next');
                 nextBtn.classList.add('btn-submit');
             } else {
-                nextBtn.textContent = 'Volgende →';
+                nextBtn.textContent = 'Volgende';
                 nextBtn.classList.remove('btn-submit');
                 nextBtn.classList.add('btn-next');
             }
@@ -744,7 +440,7 @@
                 if (answerIndex !== undefined) {
                     const option = quizQuestions[questionIndex].options[answerIndex];
                     totalScore += option.score;
-                    maxScore += 5;
+                    maxScore += 5; // Each question has max 5 points
                 }
             });
             
@@ -761,50 +457,50 @@
             quizContainer.style.display = 'none';
             resultsContainer.style.display = 'block';
             
-            // Update score circle with animation
-            scoreCircle.style.setProperty('--score-percent', `${results.percentage}%`);
-            setTimeout(() => {
-                scoreDisplay.textContent = `${results.percentage}%`;
-                if (results.percentage >= 70) {
-                    scoreCircle.classList.add('compliant');
-                    scoreCircle.classList.remove('non-compliant');
-                    scoreDisplay.classList.add('compliant');
-                    resultMessage.textContent = "Gefeliciteerd! Uw organisatie vertoont sterke compliance met de EU AI Act. Toch zijn er mogelijk nog verbeterpunten om volledig compliant te zijn en uw concurrentievoordeel te vergroten.";
-                    recommendation.innerHTML = `
-                        <h3>💡 Aanbevolen vervolgstappen</h3>
-                        <ul>
-                            <li><strong>Geavanceerde training:</strong> Verdiep uw kennis met onze gespecialiseerde AI compliance trainingen</li>
-                            <li><strong>Documentatie optimalisatie:</strong> Zorg voor volledige en audit-proof documentatie van uw AI-systemen</li>
-                            <li><strong>Proactieve monitoring:</strong> Implementeer continue monitoring om compliant te blijven bij systeemupdates</li>
-                            <li><strong>Certificering:</strong> Behaal officiële EU AI Act certificering voor marktvertrouwen</li>
-                        </ul>
-                    `;
-                } else {
-                    scoreCircle.classList.add('non-compliant');
-                    scoreCircle.classList.remove('compliant');
-                    scoreDisplay.classList.add('non-compliant');
-                    resultMessage.textContent = "Let op: Uw organisatie voldoet momenteel niet volledig aan de EU AI Act. Non-compliance kan leiden tot aanzienlijke boetes (tot €30 miljoen of 6% van de wereldwijde omzet) en reputatieschade. Actie is dringend nodig.";
-                    recommendation.innerHTML = `
-                        <h3>🚨 Dringende aanbevelingen</h3>
-                        <ul>
-                            <li><strong>Consultancy traject:</strong> Laat onze experts een gap-analyse uitvoeren en een compliance roadmap opstellen</li>
-                            <li><strong>Basis training:</strong> Start met onze EU AI Act fundamentals training voor uw team</li>
-                            <li><strong>Risico assessment:</strong> Identificeer en prioriteer de hoogste risico's in uw AI-systemen</li>
-                            <li><strong>Beleidsontwikkeling:</strong> Ontwikkel AI governance beleid en implementatierichtlijnen</li>
-                            <li><strong>Documentatie framework:</strong> Stel compliantie documentatie en registraties op</li>
-                        </ul>
-                    `;
-                }
-            }, 500);
+            scoreDisplay.textContent = `${results.percentage}%`;
             
-            // Update CTA buttons with actual URLs
-            consultancyBtn.href = "https://www.aiwegwijzer.com/consultancy";
-            trainingBtn.href = "https://www.aiwegwijzer.com/ai-trainingen";
+            if (results.percentage >= 70) {
+                scoreDisplay.classList.add('compliant');
+                scoreDisplay.classList.remove('non-compliant');
+                resultMessage.textContent = "Gefeliciteerd! Uw organisatie vertoont sterke compliance met de EU AI Act. Toch zijn er mogelijk nog verbeterpunten om volledig compliant te zijn en uw concurrentievoordeel te vergroten.";
+                recommendation.innerHTML = `
+                    <h3>Aanbevolen vervolgstappen:</h3>
+                    <ul>
+                        <li><strong>Geavanceerde training:</strong> Verdiep uw kennis met onze gespecialiseerde AI compliance trainingen</li>
+                        <li><strong>Documentatie optimalisatie:</strong> Zorg voor volledige en audit-proof documentatie van uw AI-systemen</li>
+                        <li><strong>Proactieve monitoring:</strong> Implementeer continue monitoring om compliant te blijven bij systeemupdates</li>
+                    </ul>
+                `;
+            } else {
+                scoreDisplay.classList.add('non-compliant');
+                scoreDisplay.classList.remove('compliant');
+                resultMessage.textContent = "Uw organisatie voldoet momenteel niet volledig aan de EU AI Act. Non-compliance kan leiden tot aanzienlijke boetes (tot €30 miljoen of 6% van de wereldwijde omzet) en reputatieschade. Actie is dringend nodig.";
+                recommendation.innerHTML = `
+                    <h3>Dringende aanbevelingen:</h3>
+                    <ul>
+                        <li><strong>Consultancy traject:</strong> Laat onze experts een gap-analyse uitvoeren en een compliance roadmap opstellen</li>
+                        <li><strong>Basis training:</strong> Start met onze EU AI Act fundamentals training voor uw team</li>
+                        <li><strong>Risico assessment:</strong> Identificeer en prioriteer de hoogste risico's in uw AI-systemen</li>
+                        <li><strong>Beleidsontwikkeling:</strong> Ontwikkel AI governance beleid en implementatierichtlijnen</li>
+                    </ul>
+                `;
+            }
         }
 
         // Event listeners for buttons
         prevBtn.addEventListener('click', prevQuestion);
         nextBtn.addEventListener('click', nextQuestion);
+
+        // CTA button event listeners
+        consultancyBtn.addEventListener('click', () => {
+            alert('Bedankt voor uw interesse! We nemen binnen 24 uur contact met u op om een consultancy gesprek in te plannen.');
+            // In a real implementation, this would redirect to a contact form or calendar booking
+        });
+
+        trainingBtn.addEventListener('click', () => {
+            alert('U wordt doorverwezen naar ons trainingsoverzicht.');
+            // In a real implementation, this would redirect to the training page
+        });
 
         // Initialize the quiz
         initQuiz();

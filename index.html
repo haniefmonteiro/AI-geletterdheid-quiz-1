@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EU AI Act Compliance Quiz</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #34495e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .quiz-container {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: var(--light);
+            border-radius: 4px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--secondary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .question-container {
+            margin-bottom: 20px;
+        }
+        
+        .question-number {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 12px 15px;
+            border: 2px solid var(--light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            border-color: var(--secondary);
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        
+        .option.selected {
+            border-color: var(--secondary);
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .buttons-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+        
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+        
+        .btn-prev {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        .btn-next {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-submit {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results-container {
+            text-align: center;
+            padding: 30px 20px;
+            display: none;
+        }
+        
+        .score-display {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .compliant {
+            color: var(--success);
+        }
+        
+        .non-compliant {
+            color: var(--danger);
+        }
+        
+        .result-message {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .recommendation {
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .cta-container {
+            margin-top: 25px;
+        }
+        
+        .btn-cta {
+            background: linear-gradient(135deg, var(--success), #27ae60);
+            color: white;
+            padding: 15px 25px;
+            font-size: 1rem;
+            border-radius: 50px;
+            margin: 8px;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .btn-secondary {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .quiz-container {
+                padding: 20px 15px;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            button {
+                width: 100%;
+            }
+            
+            .btn-cta {
+                display: block;
+                margin: 8px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>EU AI Act Compliance Quiz</h1>
+            <p class="subtitle">Ontdek of uw organisatie klaar is voor de nieuwe AI-wetgeving</p>
+        </header>
+        
+        <div class="quiz-container" id="quiz">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            
+            <div class="question-container">
+                <div class="question-number">Vraag <span id="current-question">1</span> van <span id="total-questions">5</span></div>
+                <h2 class="question-text" id="question-text">Wat is het primaire doel van uw AI-systeem?</h2>
+                
+                <div class="options-container" id="options-container">
+                    <!-- Options populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="buttons-container">
+                <button class="btn-prev" id="prev-btn" disabled>Vorige</button>
+                <button class="btn-next" id="next-btn">Volgende</button>
+            </div>
+        </div>
+        
+        <div class="results-container" id="results">
+            <h2>Uw Compliance Resultaat</h2>
+            <div class="score-display" id="score-display">0%</div>
+            <p class="result-message" id="result-message"></p>
+            
+            <div class="recommendation" id="recommendation">
+                <!-- Recommendation content populated by JavaScript -->
+            </div>
+            
+            <div class="cta-container">
+                <a href="#" class="btn-cta" id="consultancy-btn">Plan een consultancy gesprek in</a>
+                <a href="#" class="btn-cta btn-secondary" id="training-btn">Bekijk onze trainingen</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz questions and answers
+        const quizQuestions = [
+            {
+                question: "Wat is het primaire doel van uw AI-systeem?",
+                options: [
+                    { text: "Gebruik in hoog-risico domeinen zoals rechterlijke besluitvorming, medische diagnose of kritieke infrastructuur", score: 0 },
+                    { text: "Biometrische identificatie of surveillance", score: 0 },
+                    { text: "Klantenservice, content aanbevelingen of marketing automatisering", score: 3 },
+                    { text: "Interne procesoptimalisatie zonder externe impact", score: 5 }
+                ]
+            },
+            {
+                question: "Hoe transparant is uw AI-systeem over zijn werking?",
+                options: [
+                    { text: "Het systeem is een 'black box' en beslissingen zijn niet uitlegbaar", score: 0 },
+                    { text: "Sommige beslissingen kunnen worden uitgelegd, maar niet consistent", score: 2 },
+                    { text: "We kunnen meestal uitleggen hoe beslissingen worden genomen", score: 4 },
+                    { text: "Ons systeem is volledig transparant en beslissingen zijn altijd traceerbaar", score: 5 }
+                ]
+            },
+            {
+                question: "Hoe gaat uw organisatie om met data privacy en governance?",
+                options: [
+                    { text: "We hebben geen formeel data governance beleid", score: 0 },
+                    { text: "We volgen basis GDPR vereisten maar hebben geen AI-specifiek beleid", score: 2 },
+                    { text: "We hebben een data governance framework dat ook AI-systemen omvat", score: 4 },
+                    { text: "We hebben een uitgebreid AI-governance framework met regelmatige audits", score: 5 }
+                ]
+            },
+            {
+                question: "Heeft uw organisatie procedures voor menselijk toezicht op AI-beslissingen?",
+                options: [
+                    { text: "Nee, AI-beslissingen worden automatisch geïmplementeerd", score: 0 },
+                    { text: "Alleen voor hoog-risico beslissingen", score: 2 },
+                    { text: "We hebben menselijk toezicht ingebouwd voor de meeste AI-beslissingen", score: 4 },
+                    { text: "Alle AI-beslissingen kunnen worden gemonitord en gecorrigeerd door mensen", score: 5 }
+                ]
+            },
+            {
+                question: "Hoe robuust en veilig is uw AI-systeem tegen aanvallen of fouten?",
+                options: [
+                    { text: "We hebben geen formele tests voor robuustheid uitgevoerd", score: 0 },
+                    { text: "We hebben basis tests uitgevoerd maar geen uitgebreide security assessment", score: 2 },
+                    { text: "Ons systeem is getest op robuustheid en we hebben security maatregelen geïmplementeerd", score: 4 },
+                    { text: "Ons systeem ondergaat regelmatig uitgebreide security en robuustheid audits", score: 5 }
+                ]
+            }
+        ];
+
+        // DOM elements
+        const quizContainer = document.getElementById('quiz');
+        const resultsContainer = document.getElementById('results');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const currentQuestionElement = document.getElementById('current-question');
+        const totalQuestionsElement = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const scoreDisplay = document.getElementById('score-display');
+        const resultMessage = document.getElementById('result-message');
+        const recommendation = document.getElementById('recommendation');
+        const consultancyBtn = document.getElementById('consultancy-btn');
+        const trainingBtn = document.getElementById('training-btn');
+
+        // Quiz state
+        let currentQuestion = 0;
+        let userAnswers = new Array(quizQuestions.length);
+        let totalScore = 0;
+
+        // Initialize quiz
+        function initQuiz() {
+            totalQuestionsElement.textContent = quizQuestions.length;
+            showQuestion();
+            updateProgressBar();
+        }
+
+        // Display current question
+        function showQuestion() {
+            const question = quizQuestions[currentQuestion];
+            questionText.textContent = question.question;
+            currentQuestionElement.textContent = currentQuestion + 1;
+            
+            optionsContainer.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('option');
+                if (userAnswers[currentQuestion] === index) {
+                    optionElement.classList.add('selected');
+                }
+                optionElement.textContent = option.text;
+                optionElement.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            updateButtons();
+        }
+
+        // Select an option
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestion] = optionIndex;
+            showQuestion();
+        }
+
+        // Update navigation buttons
+        function updateButtons() {
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === quizQuestions.length - 1) {
+                nextBtn.textContent = 'Bekijk Resultaat';
+                nextBtn.classList.remove('btn-next');
+                nextBtn.classList.add('btn-submit');
+            } else {
+                nextBtn.textContent = 'Volgende';
+                nextBtn.classList.remove('btn-submit');
+                nextBtn.classList.add('btn-next');
+            }
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const progress = ((currentQuestion + 1) / quizQuestions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Navigate to next question
+        function nextQuestion() {
+            if (userAnswers[currentQuestion] === undefined) {
+                alert('Selecteer een antwoord om door te gaan.');
+                return;
+            }
+            
+            if (currentQuestion < quizQuestions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+                updateProgressBar();
+            } else {
+                calculateResults();
+                showResults();
+            }
+        }
+
+        // Navigate to previous question
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+                updateProgressBar();
+            }
+        }
+
+        // Calculate final score and results
+        function calculateResults() {
+            totalScore = 0;
+            let maxScore = 0;
+            
+            userAnswers.forEach((answerIndex, questionIndex) => {
+                if (answerIndex !== undefined) {
+                    const option = quizQuestions[questionIndex].options[answerIndex];
+                    totalScore += option.score;
+                    maxScore += 5; // Each question has max 5 points
+                }
+            });
+            
+            return {
+                percentage: Math.round((totalScore / maxScore) * 100),
+                rawScore: totalScore,
+                maxScore: maxScore
+            };
+        }
+
+        // Display results
+        function showResults() {
+            const results = calculateResults();
+            quizContainer.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            
+            scoreDisplay.textContent = `${results.percentage}%`;
+            
+            if (results.percentage >= 70) {
+                scoreDisplay.classList.add('compliant');
+                scoreDisplay.classList.remove('non-compliant');
+                resultMessage.textContent = "Gefeliciteerd! Uw organisatie vertoont sterke compliance met de EU AI Act. Toch zijn er mogelijk nog verbeterpunten om volledig compliant te zijn en uw concurrentievoordeel te vergroten.";
+                recommendation.innerHTML = `
+                    <h3>Aanbevolen vervolgstappen:</h3>
+                    <ul>
+                        <li><strong>Geavanceerde training:</strong> Verdiep uw kennis met onze gespecialiseerde AI compliance trainingen</li>
+                        <li><strong>Documentatie optimalisatie:</strong> Zorg voor volledige en audit-proof documentatie van uw AI-systemen</li>
+                        <li><strong>Proactieve monitoring:</strong> Implementeer continue monitoring om compliant te blijven bij systeemupdates</li>
+                    </ul>
+                `;
+            } else {
+                scoreDisplay.classList.add('non-compliant');
+                scoreDisplay.classList.remove('compliant');
+                resultMessage.textContent = "Uw organisatie voldoet momenteel niet volledig aan de EU AI Act. Non-compliance kan leiden tot aanzienlijke boetes (tot €30 miljoen of 6% van de wereldwijde omzet) en reputatieschade. Actie is dringend nodig.";
+                recommendation.innerHTML = `
+                    <h3>Dringende aanbevelingen:</h3>
+                    <ul>
+                        <li><strong>Consultancy traject:</strong> Laat onze experts een gap-analyse uitvoeren en een compliance roadmap opstellen</li>
+                        <li><strong>Basis training:</strong> Start met onze EU AI Act fundamentals training voor uw team</li>
+                        <li><strong>Risico assessment:</strong> Identificeer en prioriteer de hoogste risico's in uw AI-systemen</li>
+                        <li><strong>Beleidsontwikkeling:</strong> Ontwikkel AI governance beleid en implementatierichtlijnen</li>
+                    </ul>
+                `;
+            }
+            
+            // Update CTA buttons with actual URLs
+            consultancyBtn.href = 'https://yourwebsite.com/consultancy';
+            trainingBtn.href = 'https://yourwebsite.com/training';
+        }
+
+        // Event listeners for buttons
+        prevBtn.addEventListener('click', prevQuestion);
+        nextBtn.addEventListener('click', nextQuestion);
+
+        // Initialize the quiz
+        initQuiz();
+    </script>
+</body>
+</html>
